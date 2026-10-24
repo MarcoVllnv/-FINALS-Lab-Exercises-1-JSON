@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Lab 5</title>
+</head>
+<body>
+
+<form id="myForm">
+    Name: <input type="text" id="name" value="Maria">
+    <button type="submit">Submit</button>
+</form>
+
+<p id="result"></p>
+
+<script>
+document.getElementById("myForm").onsubmit = function(e) {
+    e.preventDefault();
+
+    var name = document.getElementById("name").value;
+
+    fetch("lab5.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name })
+    })
+    .then(function(response) {
+        return response.text();
+    })
+    .then(function(text) {
+        document.getElementById("result").innerText = text;
+    })
+    .catch(function(error) {
+        document.getElementById("result").innerText = "Error: " + error.message;
+    });
+};
+</script>
+
+</body>
+</html>
